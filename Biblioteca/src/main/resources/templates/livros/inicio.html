@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="...">
+<head>
+    <meta charset="utf-8">
+    <title>Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1 th:text="${titulo} ?: 'Bem-Vindo ao Sistema de Biblioteca!'"></h1>
+    <p th:text="${texto} ?: 'Menu inicial do Sistema de Biblioteca, acesse as abas desejadas abaixo:'"></p>
+    <nav>
+        <a th:href="@{/livros}">Livros</a>
+        <a th:href="@{/livros}">Autores</a>
+        <a th:href="@{/livros}">Categorias</a>
+        <a th:href="@{/livros}">Usuários</a>
+        <a th:href="@{/livros}">Empréstimos</a>
+    </nav>
+</body>
+</html>

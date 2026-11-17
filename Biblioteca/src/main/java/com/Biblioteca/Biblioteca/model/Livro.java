@@ -5,6 +5,9 @@ public class Livro {
     private String autor;
     private String isnb;
 
+    public Livro(String titulo, String autor, String isnb) {
+    }
+
     public String getTitulo() {
         return titulo;
     }

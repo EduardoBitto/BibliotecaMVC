@@ -5,7 +5,13 @@ public class Livro {
     private String autor;
     private String isnb;
 
+    public Livro() {
+    }
+
     public Livro(String titulo, String autor, String isnb) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isnb = isnb;
     }
 
     public String getTitulo() {

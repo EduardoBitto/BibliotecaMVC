@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Biblioteca - Autores</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${titulo} ?: 'Gerenciamento de Autores'"></h1>
+<p th:text="${texto} ?: 'Menu inicial do Sistema de Biblioteca, acesse as abas desejadas abaixo:'"></p>
+
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+
+<hr>
+
+<h2>Cadastrar Novo Autor</h2>
+<form th:action="@{/autores}" method="POST" th:object="${novoAutor}">
+    <div>
+        <label for="nome">Nome do Autor:</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+    </div>
+    <div>
+        <label for="nacionalidade">Nacionalidade:</label>
+        <input type="text" id="nacionalidade" th:field="*{nacionalidade}" required>
+    </div>
+    <div>
+        <label for="obrasPublicadas">Obras Publicadas:</label>
+        <input type="text" id="obrasPublicadas" th:field="*{obrasPublicadas}" required>
+    </div>
+    <button type="submit">Salvar Autor</button>
+</form>
+
+<hr>
+
+<h2>Autores na Memória</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Nacionalidade</th>
+        <th>Obras Publicadas</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="autor, stat : ${autores}">
+        <td th:text="${autor.nome}"></td>
+        <td th:text="${autor.nacionalidade}"></td>
+        <td th:text="${autor.obrasPublicadas}"></td>
+        <td>
+            <a th:href="@{/autores/editar/{id}(id=${stat.index})}" style="color: blue; margin-right: 10px;">Editar</a>
+            <form th:action="@{/autores/{id}(id=${stat.index})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" style="color: red;">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(autores)}">
+        <td colspan="4" style="text-align: center;">Nenhum autor cadastrado ainda.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

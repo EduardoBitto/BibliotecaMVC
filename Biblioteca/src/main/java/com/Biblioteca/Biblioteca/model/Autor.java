@@ -3,7 +3,16 @@ package com.Biblioteca.Biblioteca.model;
 public class Autor {
     private String nome;
     private String nacionalidade;
-    private String obraspublicadas;
+    private String obrasPublicadas;
+
+    public Autor() {
+    }
+
+    public Autor(String nome, String nacionalidade, String obrasPublicadas) {
+        this.nome = nome;
+        this.nacionalidade = nacionalidade;
+        this.obrasPublicadas = obrasPublicadas;
+    }
 
     public String getNome() {
         return nome;
@@ -21,11 +30,11 @@ public class Autor {
         this.nacionalidade = nacionalidade;
     }
 
-    public String getObraspublicadas() {
-        return obraspublicadas;
+    public String getObrasPublicadas() {
+        return obrasPublicadas;
     }
 
-    public void setObraspublicadas(String obraspublicadas) {
-        this.obraspublicadas = obraspublicadas;
+    public void setObrasPublicadas(String obrasPublicadas) {
+        this.obrasPublicadas = obrasPublicadas;
     }
 }

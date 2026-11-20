@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Editar Categoria</title>
+</head>
+<body>
+<h1>Editar Categoria</h1>
+<form th:action="@{/categorias/editar/{id}(id=${id})}" method="POST" th:object="${categoriaExistente}">
+    <label>Gênero: <input type="text" th:field="*{genero}" required></label><br><br>
+    <label>Descrição: <input type="text" th:field="*{descricao}" required></label><br><br>
+    <label>Classificação:
+        <select th:field="*{classificacaoIndicativa}">
+            <option value="Livre">Livre</option>
+            <option value="+10">Maiores de 10 anos</option>
+            <option value="+12">Maiores de 12 anos</option>
+            <option value="+14">Maiores de 14 anos</option>
+            <option value="+16">Maiores de 16 anos</option>
+            <option value="+18">Maiores de 18 anos</option>
+        </select>
+    </label><br><br>
+    <button type="submit">Atualizar Categoria</button>
+    <a th:href="@{/categorias}">Cancelar</a>
+</form>
+</body>
+</html>

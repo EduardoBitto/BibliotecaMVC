@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Biblioteca - Empréstimos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${titulo} ?: 'Gerenciamento de Empréstimos'"></h1>
+<p th:text="${texto} ?: 'Menu inicial do Sistema de Biblioteca, acesse as abas desejadas abaixo:'"></p>
+
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+
+<hr>
+
+<h2>Registrar Novo Empréstimo</h2>
+<form th:action="@{/emprestimos}" method="POST" th:object="${novoEmprestimo}">
+    <div>
+        <label for="dataEmprestimo">Data do Empréstimo:</label>
+        <input type="date" id="dataEmprestimo" th:field="*{dataEmprestimo}" required>
+    </div>
+    <div>
+        <label for="dataDevolucao">Data de Devolução:</label>
+        <input type="date" id="dataDevolucao" th:field="*{dataDevolucao}" required>
+    </div>
+    <div>
+        <label for="livroEmprestado">Livro Emprestado:</label>
+        <input type="text" id="livroEmprestado" th:field="*{livroEmprestado}" placeholder="Nome do Livro" required>
+    </div>
+    <button type="submit">Salvar Empréstimo</button>
+</form>
+
+<hr>
+
+<h2>Empréstimos na Memória</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Data do Empréstimo</th>
+        <th>Data de Devolução</th>
+        <th>Livro Emprestado</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="emprestimo, stat : ${emprestimos}">
+        <td th:text="${emprestimo.dataEmprestimo}"></td>
+        <td th:text="${emprestimo.dataDevolucao}"></td>
+        <td th:text="${emprestimo.livroEmprestado}"></td>
+        <td>
+            <a th:href="@{/emprestimos/editar/{id}(id=${stat.index})}" style="color: blue; margin-right: 10px;">Editar</a>
+            <form th:action="@{/emprestimos/{id}(id=${stat.index})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" style="color: red;">Excluir</button>
+            </form>
+        </td>
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(emprestimos)}">
+        <td colspan="4" style="text-align: center;">Nenhum empréstimo registrado ainda.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Biblioteca - Usuários</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${titulo} ?: 'Gerenciamento de Usuários'"></h1>
+<p th:text="${texto} ?: 'Menu inicial do Sistema de Biblioteca, acesse as abas desejadas abaixo:'"></p>
+
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+
+<hr>
+
+<h2>Registrar Novo Usuário</h2>
+<form th:action="@{/usuarios}" method="POST" th:object="${novoUsuario}">
+    <div>
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+    </div>
+    <div>
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00" required>
+    </div>
+    <div>
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" th:field="*{telefone}" placeholder="(00) 00000-0000" required>
+    </div>
+    <button type="submit">Salvar Usuário</button>
+</form>
+
+<hr>
+
+<h2>Usuários na Memória</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usuario, stat : ${usuarios}">
+        <td th:text="${usuario.nome}"></td>
+        <td th:text="${usuario.cpf}"></td>
+        <td th:text="${usuario.telefone}"></td>
+        <td>
+            <a th:href="@{/usuarios/editar/{id}(id=${stat.index})}" style="color: blue; margin-right: 10px;">Editar</a>
+
+            <form th:action="@{/usuarios/{id}(id=${stat.index})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" style="color: red;">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(usuarios)}">
+        <td colspan="4" style="text-align: center;">Nenhum usuário registrado ainda.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

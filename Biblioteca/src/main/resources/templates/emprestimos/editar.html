@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Editar Empréstimo</title>
+</head>
+<body>
+<h1>Editar Empréstimo</h1>
+<form th:action="@{/emprestimos/editar/{id}(id=${id})}" method="POST" th:object="${emprestimoExistente}">
+    <label>Data de Empréstimo: <input type="date" th:field="*{dataEmprestimo}" required></label><br><br>
+    <label>Data de Devolução: <input type="date" th:field="*{dataDevolucao}" required></label><br><br>
+    <label>Livro: <input type="text" th:field="*{livroEmprestado}" required></label><br><br>
+    <button type="submit">Atualizar Empréstimo</button>
+    <a th:href="@{/emprestimos}">Cancelar</a>
+</form>
+</body>
+</html>

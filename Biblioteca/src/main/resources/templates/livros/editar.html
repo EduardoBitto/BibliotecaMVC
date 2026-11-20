@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Editar Livro</title>
+</head>
+<body>
+<h1>Editar Livro</h1>
+<form th:action="@{/livros/editar/{id}(id=${id})}" method="POST" th:object="${livroExistente}">
+    <label>Título: <input type="text" th:field="*{titulo}" required></label><br><br>
+    <label>Autor: <input type="text" th:field="*{autor}" required></label><br><br>
+    <label>ISNB: <input type="text" th:field="*{isnb}" required></label><br><br>
+    <button type="submit">Atualizar Livro</button>
+    <a th:href="@{/livros}">Cancelar</a>
+</form>
+</body>
+</html>

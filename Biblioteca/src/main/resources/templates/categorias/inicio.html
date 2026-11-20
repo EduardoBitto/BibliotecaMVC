@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Biblioteca - Categorias</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${titulo} ?: 'Gerenciamento de Categorias'"></h1>
+<p th:text="${texto} ?: 'Menu inicial do Sistema de Biblioteca, acesse as abas desejadas abaixo:'"></p>
+
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+
+<hr>
+
+<h2>Registrar Nova Categoria</h2>
+<form th:action="@{/categorias}" method="POST" th:object="${novaCategoria}">
+    <div>
+        <label for="genero">Gênero Literário:</label>
+        <input type="text" id="genero" th:field="*{genero}" placeholder="Ex: Ficção Científica" required>
+    </div>
+    <div>
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" th:field="*{descricao}" placeholder="Ex: Livros baseados em ciência" required>
+    </div>
+    <div>
+        <label for="classificacaoIndicativa">Classificação Indicativa:</label>
+        <select id="classificacaoIndicativa" th:field="*{classificacaoIndicativa}">
+            <option value="Livre">Livre</option>
+            <option value="+10">Maiores de 10 anos</option>
+            <option value="+12">Maiores de 12 anos</option>
+            <option value="+14">Maiores de 14 anos</option>
+            <option value="+16">Maiores de 16 anos</option>
+            <option value="+18">Maiores de 18 anos</option>
+        </select>
+    </div>
+    <button type="submit">Salvar Categoria</button>
+</form>
+
+<hr>
+
+<h2>Categorias na Memória</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Gênero</th>
+        <th>Descrição</th>
+        <th>Classificação</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="categoria, stat : ${categorias}">
+        <td th:text="${categoria.genero}"></td>
+        <td th:text="${categoria.descricao}"></td>
+        <td th:text="${categoria.classificacaoIndicativa}"></td>
+        <td>
+            <a th:href="@{/categorias/editar/{id}(id=${stat.index})}" style="color: blue; margin-right: 10px;">Editar</a>
+            <form th:action="@{/categorias/{id}(id=${stat.index})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" style="color: red;">Excluir</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(categorias)}">
+        <td colspan="4" style="text-align: center;">Nenhuma categoria registrada ainda.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
